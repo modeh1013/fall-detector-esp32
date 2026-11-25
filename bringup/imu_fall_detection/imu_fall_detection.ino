@@ -19,7 +19,7 @@ void setup() {
 
 void loop() {
   Wire.beginTransmission(IMU_ADDR);
-  Wire.write(0x3B);            // first accel register
+  Wire.write(0x3B);
   Wire.endTransmission(false);
   Wire.requestFrom(IMU_ADDR, (uint8_t)6);
 
@@ -30,6 +30,16 @@ void loop() {
   float ax = rx / 4096.0, ay = ry / 4096.0, az = rz / 4096.0;
   float mag = sqrt(ax*ax + ay*ay + az*az);
 
-  Serial.printf("x=%.2f y=%.2f z=%.2f |a|=%.2f g\n", ax, ay, az, mag);
-  delay(20);                   // about 50 readings per second
+//Tests to run to see behavior:
+
+  /*
+  // print only when something interesting happens
+  if (mag < 0.8 || mag > 1.3) {
+    Serial.printf("%lu ms  |a|=%.2f\n", millis(), mag);
+  } */
+
+  /*if (++n % 10 == 0) {      // print every 10th reading, about 20 lines per second
+  Serial.printf("%lu ms  |a|=%.3f  x=%.3f y=%.3f z=%.3f\n", millis(), mag, ax, ay, az);
+} */
+  delay(5);   // about 200 readings per second
 }
